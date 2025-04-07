@@ -47,7 +47,7 @@ const userScehma = new mongoose.Schema({
         enum : ["Job Seeker","Employer"]
     },
     createdAt : {
-        type : Date,
+        type : Date, 
         default : Date.now
     }
 })
