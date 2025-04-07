@@ -1,10 +1,14 @@
-import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
-import {errorHandler} from "../middlewares/error.middleware";
-import { User } from "../models/user.model";
+import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
+import {errorHandler} from "../middlewares/error.middleware.js";
+import { User } from "../models/user.model.js";
 import {v2 as cloudinary} from "cloudinary"
 
 const register = catchAsyncErrors(async(req,res,next)=>{
-    const {name,
+    
+    console.log("BODY:", req.body);
+
+    const {
+        name,
         email,
         phone,
         address,
@@ -26,7 +30,7 @@ const register = catchAsyncErrors(async(req,res,next)=>{
     const existingUser = await User.findOne({email})
     
     if(existingUser){
-        throw new errorHandler(400,"User already exists")
+        return next(new errorHandler(400,"User already exists"))
     }
 
     const userData = {
@@ -44,7 +48,7 @@ const register = catchAsyncErrors(async(req,res,next)=>{
         coverLetter
     }
 
-    if(req.files && req.files.resume){
+    /*if(req.files && req.files.resume){
         const {resume} = req.files
         if(resume){
             try {
@@ -63,7 +67,7 @@ const register = catchAsyncErrors(async(req,res,next)=>{
             }
         }
     }
-
+    */
     const user = await User.create(userData)
 
     return res.status(201).json({
