@@ -48,12 +48,13 @@ const register = catchAsyncErrors(async(req,res,next)=>{
         coverLetter
     }
 
-    /*if(req.files && req.files.resume){
+    if(req.files && req.files.resume){
         const {resume} = req.files
+        console.log("RESUME:", resume);
         if(resume){
             try {
                 const cloudinaryResponse = await cloudinary.uploader.upload(resume.tempFilePath,
-                    {folder : "Jpb_Seeker_Resume"}
+                    {folder : "Job_Seeker_Resume"}
                 )
                 if(!cloudinaryResponse || cloudinaryResponse.error){
                     throw new errorHandler(500,"Failed to upload resume to cloud ")
@@ -67,7 +68,7 @@ const register = catchAsyncErrors(async(req,res,next)=>{
             }
         }
     }
-    */
+    
     const user = await User.create(userData)
 
     return res.status(201).json({

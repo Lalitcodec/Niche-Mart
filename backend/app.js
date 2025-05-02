@@ -22,7 +22,7 @@ app.use(cookieParser());
 
 app.use(express.urlencoded({ extended : true }))
 
-app.use(express.json());
+
 
 app.use(
     fileUpload({
@@ -31,10 +31,13 @@ app.use(
     })
 )
 
+  
+app.use(express.json());
+
 app.use("/api/v1/user",userRouter)
 
 
-connection()
+connection();
 
 app.use(errorMiddleware);
 
